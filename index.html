@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureVault - Advanced Password Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="cyber-bg">
+        <div class="grid-overlay"></div>
+        <div class="scan-line"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <span class="logo-icon">⚡</span>
+            <span class="logo-text">SecureVault</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn active" data-tab="generator">Generator</button>
+            <button class="nav-btn" data-tab="vault">Vault</button>
+            <button class="nav-btn" data-tab="analyzer">Analyzer</button>
+            <button class="nav-btn" data-tab="breach">Breach Check</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- GENERATOR TAB -->
+        <div class="tab-content active" id="generator">
+            <div class="card glitch-card">
+                <div class="card-header">
+                    <h2>🔐 Password Generator</h2>
+                    <p class="subtitle">Military-grade password creation</p>
+                </div>
+
+                <div class="password-display">
+                    <input type="text" id="password" readonly placeholder="Generate a password...">
+                    <button id="copyBtn" class="icon-btn" title="Copy">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                    </button>
+                    <button id="regenerateBtn" class="icon-btn" title="Regenerate">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="23 4 23 10 17 10"></polyline>
+                            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="strength-meter">
+                    <div class="strength-bar">
+                        <div id="strengthFill"></div>
+                    </div>
+                    <div class="strength-info">
+                        <span id="strengthText">Strength: —</span>
+                        <span id="entropyText">Entropy: —</span>
+                    </div>
+                </div>
+
+                <div class="controls-grid">
+                    <div class="control-group">
+                        <label>Length: <span id="lengthValue">16</span></label>
+                        <input type="range" min="8" max="64" value="16" id="lengthSlider" class="slider">
+                    </div>
+
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="uppercase" checked>
+                            <span>Uppercase (A-Z)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="lowercase" checked>
+                            <span>Lowercase (a-z)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="numbers" checked>
+                            <span>Numbers (0-9)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="symbols" checked>
+                            <span>Symbols (!@#$)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="excludeAmbiguous">
+                            <span>Exclude Similar (0O, 1lI)</span>
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="pronounceable">
+                            <span>Pronounceable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <button class="generate-btn primary-btn" id="generateBtn">
+                    <span>Generate Password</span>
+                    <div class="btn-glow"></div>
+                </button>
+
+                <div class="password-patterns">
+                    <h3>Quick Patterns</h3>
+                    <div class="pattern-btns">
+                        <button class="pattern-btn" data-pattern="pin">4-Digit PIN</button>
+                        <button class="pattern-btn" data-pattern="memorable">Memorable</button>
+                        <button class="pattern-btn" data-pattern="max-security">Max Security</button>
+                        <button class="pattern-btn" data-pattern="passphrase">Passphrase</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VAULT TAB -->
+        <div class="tab-content" id="vault">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🗝️ Password Vault</h2>
+                    <p class="subtitle">Securely store your credentials</p>
+                </div>
+
+                <div class="vault-add">
+                    <input type="text" id="vaultWebsite" placeholder="Website / App name">
+                    <input type="text" id="vaultUsername" placeholder="Username / Email">
+                    <input type="password" id="vaultPassword" placeholder="Password">
+                    <button id="addToVault" class="primary-btn">Add to Vault</button>
+                </div>
+
+                <div class="vault-search">
+                    <input type="text" id="vaultSearch" placeholder="🔍 Search vault...">
+                </div>
+
+                <div id="vaultList" class="vault-list"></div>
+            </div>
+        </div>
+
+        <!-- ANALYZER TAB -->
+        <div class="tab-content" id="analyzer">
+            <div class="card">
+                <div class="card-header">
+                    <h2>📊 Password Health Analyzer</h2>
+                    <p class="subtitle">Comprehensive security audit</p>
+                </div>
+
+                <div class="analyzer-input">
+                    <textarea id="analyzerInput" placeholder="Paste passwords to analyze (one per line)..."></textarea>
+                    <button id="analyzeBtn" class="primary-btn">Analyze Passwords</button>
+                </div>
+
+                <div id="analyzerResults" class="analyzer-results"></div>
+            </div>
+        </div>
+
+        <!-- BREACH CHECK TAB -->
+        <div class="tab-content" id="breach">
+            <div class="card">
+                <div class="card-header">
+                    <h2>🛡️ Breach Database Check</h2>
+                    <p class="subtitle">Check if password has been compromised</p>
+                </div>
+
+                <div class="breach-info">
+                    <div class="info-box">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <p>This feature uses k-anonymity to check passwords against known breaches without sending your actual password. Your privacy is protected.</p>
+                    </div>
+                </div>
+
+                <div class="breach-input">
+                    <input type="password" id="breachPassword" placeholder="Enter password to check">
+                    <button id="breachCheckBtn" class="primary-btn">Check Password</button>
+                </div>
+
+                <div id="breachResults" class="breach-results"></div>
+
+                <div class="breach-stats" id="breachStats">
+                    <h3>Common Breach Patterns</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">3.2B</div>
+                            <div class="stat-label">Passwords Leaked (2023)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">81%</div>
+                            <div class="stat-label">Breaches from Weak Passwords</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">23M</div>
+                            <div class="stat-label">Accounts Used "123456"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
